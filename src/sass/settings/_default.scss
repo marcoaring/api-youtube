@@ -1,0 +1,30 @@
+body{
+	font-family: $titillium;
+
+	.full-container{ width: 100%; }
+
+	.container{
+		width: 90%;
+		padding: 0px 5%;
+
+		@media (min-width: 1024px){
+			width: 960px;
+			padding: 0px;
+			margin: 0 auto;
+		}
+	}
+	
+	/* Hack para pintar todos os placeholder de Branco */
+	::placeholder {
+		color: white;
+		opacity: 1;
+	}
+
+	:-ms-input-placeholder{
+		color: white;
+	}
+
+	::-ms-input-placeholder{
+		color: white;
+	}
+}
