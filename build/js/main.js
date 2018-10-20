@@ -1,1 +1,1 @@
-$(document).ready(function(){});
+var appVue=new Vue({el:".app-vue",data:{searchResults:[],menuSelected:!1,searchSelected:!1,search:""},created:function(){},methods:{openMenu:function(){this.menuSelected?this.menuSelected=!1:(this.menuSelected=!0,this.searchSelected=!1)},openSearch:function(){this.searchSelected?this.searchSelected=!1:(this.searchSelected=!0,this.menuSelected=!1)}},watch:{}});
