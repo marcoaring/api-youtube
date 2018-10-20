@@ -1,0 +1,39 @@
+<section class="full-container header">
+	<div class="container">
+		<nav class="main-header">
+			<section class="main-header__logo">
+				<img src="assets/images/logo.png" alt="Logo Fictícia Vídeos">
+			</section>
+
+			<section class="main-header__navigation">
+				<div :class="'navigation-itens search-item ' + [searchSelected ? 'search-item--open' : '']">
+					<input type="text" name="search" id="search" v-model="search" placeholder="Digite um termo para a pesquisa" class="search-item__field">
+					<img src="assets/images/lupa.png" alt="Lupa" class="search-item__image" v-on:click.prevent="openSearch">
+				</div>
+
+				<div :class="'navigation-itens menu-item ' + [menuSelected ? 'menu-item--open' : '']">
+					<span class="menu-item__text">Menu</span>
+
+					<a class="menu-item__hamburguer main-hamburguer" v-on:click.prevent="openMenu">
+						<span class="main-hamburguer__lines"></span>
+					</a>
+
+					<ul class="list-menu">
+						<li class="list-menu__item">
+							<a href="#" class="list-menu__link">
+								<img src="assets/images/destaques.png" alt="Ícone de uma Estrela" class="list-menu__image">
+								Destaques
+							</a>
+						</li>
+						<li class="list-menu__item">
+							<a href="#" class="list-menu__link">
+								<img src="assets/images/videos.png" alt="Ícone de um Player de vídeo" class="list-menu__image">
+								Videos
+							</a>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</nav>
+	</div>
+</section>
