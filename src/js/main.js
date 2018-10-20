@@ -2,10 +2,12 @@ var appVue = new Vue({
     el: ".app-vue",
     data: {
         videos: [],
+        modalVideo: [],
         searchResults: [],
         menuSelected: false,
         searchSelected: false,
         loader: false,
+        modal: false,
         search: '',
         nextPage: '',
         urlApi: 'https://www.googleapis.com/youtube/v3/',
@@ -78,6 +80,22 @@ var appVue = new Vue({
             }
         },
 
+        formatViewsInternal: function(views){
+            return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+
+        formatDate: function(date){
+            meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            
+            date = new Date(date);
+            day  = date.getDate().toString();
+            dayFinal = (day.length == 1) ? '0' + day : day;
+            month = date.getMonth();
+            year = date.getFullYear();
+
+            return dayFinal + " de " + meses[month] + " de " + year;
+        },
+
         cutLongText: function(text, size){
             if(text.length > size){
                 return text.substring(0, size) + '...';
@@ -146,6 +164,19 @@ var appVue = new Vue({
 
                 complete: function(){
                     self.loader = false;
+                }
+            });
+        },
+
+        openModal: function(videoId){
+            var self = this;
+
+            this.modal = true;
+
+            $.ajax({
+                url: self.urlApi + "videos?key=" + self.keyApi + "&id=" + videoId + "&part=id,snippet,contentDetails,statistics",
+                success: function(resultVideo){
+                    self.modalVideo = resultVideo.items[0];
                 }
             });
         },

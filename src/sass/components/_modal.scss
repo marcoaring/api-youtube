@@ -1,0 +1,117 @@
+.modal{
+	position: absolute;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(255,255,255,0.8);
+	z-index: 9;
+
+	.main-modal{
+		background: $branco;
+		width: 82%;
+		margin: 0 auto;
+		padding: 4% 6% 6% 6%;
+		border: 1px solid $cinza-claro;
+
+		&__close{
+			display: block;
+			float: right;
+			width: 16px;
+			height: 16px;
+			background: $branco url('../assets/images/close.png') no-repeat center;
+			margin-bottom: 15px;
+			border-radius: 50%;
+			padding: 6px;
+			transition: all 0.3s linear;
+
+			&:hover{ background: #f40000 url('../assets/images/close-hover.png') no-repeat center; }
+
+			&:active{ background-color: #c4161c; }
+		}
+
+		&__info{
+			margin: 20px 0px;
+
+			.info-title{
+				width: 100%;
+				color: $vinho;
+				font-weight: 600;
+				font-size: 18px;
+			}
+
+			.views-date{ display: none; }
+		}
+
+		&__description{
+			overflow-y: scroll;
+			max-height: 200px;
+			font-size: 16px;
+			line-height: 21px;
+			color: $cinza-text;
+		}
+
+		@media (min-width: 768px){
+    		width: 561px;
+    		padding: 15px 25px 25px 25px;
+			
+			&__info{
+				display: flex;
+
+				.info-title{
+					display: inline-block;
+					width: 80%;
+				}
+
+				.views-date{
+					display: block;
+					width: 20%;
+    				text-align: right;
+					
+					&__content{
+						margin-left: 10px;
+						position: relative;
+
+						.box-hidden{
+							display: none;
+							position: absolute;
+							background: $branco;
+							color: $cinza;
+							font-weight: 600;
+							border: 3px solid #e6e6e6;
+							border-radius: 5px;
+							padding: 15px 20px;
+							top: -65px;
+    						left: -25px;
+    						text-align: center;
+
+    						&.box-views{
+    							width: 110px;
+    							left: -65px;
+    						}
+
+    						&.box-date{
+    							width: 175px;
+    							left: -109px;
+    						}
+						}
+
+						img:hover{ cursor: pointer; }
+
+						&:hover{
+							.box-hidden{ display: block; }
+						}
+					}
+				}
+			}
+
+    		&__description{
+    			max-height: inherit;
+    			overflow-y: inherit;
+    		}
+    	}
+	}
+}
