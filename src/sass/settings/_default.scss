@@ -6,6 +6,46 @@ body{
 	.container{
 		width: 90%;
 		padding: 0px 5%;
+		
+		&__title{
+			color: $vinho;
+			font-size: 36px;
+			margin-bottom: 40px;
+		}
+
+		&__responsive{
+			display: block;
+		    max-width: 100%;
+		    height: auto;
+		}
+
+		&__load-more{
+			display: block;
+			width: 100%;
+			margin: 0 auto 20px auto;
+			font-size: 14px;
+			font-weight: 700;
+			text-transform: uppercase;
+			color: $cinza;
+			border: 1px solid $cinza;
+			border-radius: 5px;
+			padding: 10px 0px;
+			text-align: center;
+			text-decoration: none;
+			transition: all 0.3s linear;
+
+			&:hover{
+				background-color: $cinza;
+				color: $branco;
+			}
+
+			&:active{
+				background-color: #737373;
+				color: $branco;
+			}
+
+			@media (min-width: 540px){ width: 50%; }
+		}
 
 		@media (min-width: 1024px){
 			width: 960px;
