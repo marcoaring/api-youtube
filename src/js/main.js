@@ -5,7 +5,9 @@ var appVue = new Vue({
         searchResults: [],
         menuSelected: false,
         searchSelected: false,
+        loader: false,
         search: '',
+        nextPage: '',
         urlApi: 'https://www.googleapis.com/youtube/v3/',
         keyApi: 'AIzaSyDkAhIY2OrvmrYHQp_gxT8mywbx2Lqn_0g',
         idChannel: 'UCH2VZQBLFTOp6I_qgnBJCuQ', //Encontre outros cannais acessando esse link https://commentpicker.com/youtube-channel-id.php
@@ -94,6 +96,7 @@ var appVue = new Vue({
                     var idVideo = '';
 
                     self.videos = result;
+                    self.nextPage = self.videos.nextPageToken;
 
                     $.each(self.videos.items, function(index, video){
                         idVideo = video.id.videoId;
@@ -106,6 +109,43 @@ var appVue = new Vue({
                             }
                         });
                     });
+                }
+            });
+        },
+
+        loadMoreVideos: function(nextPage){
+            var self = this;
+
+            $.ajax({
+                url: self.urlApi + "search?key=" + self.keyApi + "&channelId=" + self.idChannel + "&part=snippet,id&type=video&order=date&pageToken=" + nextPage + "&maxResults=" + self.countResults,
+                beforeSend: function(){
+                    self.loader = true;
+                },
+
+                success: function(result){
+                    var idVideo = '';
+
+                    self.nextPage = result.nextPageToken;
+
+                    $.each(result.items, function(index, newItem){
+                        self.videos.items.push(newItem);
+                    });
+
+                    $.each(self.videos.items, function(index, video){
+                        idVideo = video.id.videoId;
+
+                        $.ajax({
+                            url: self.urlApi + "videos?key=" + self.keyApi + "&id=" + idVideo + "&part=contentDetails,statistics",
+                            success: function(videoItem){
+                                self.$set(self.videos.items[index], 'viewCount', self.formatViews(videoItem.items[0].statistics.viewCount));
+                                self.$set(self.videos.items[index], 'duration', self.ISO8601toDuration(videoItem.items[0].contentDetails.duration));
+                            }
+                        });
+                    });
+                },
+
+                complete: function(){
+                    self.loader = false;
                 }
             });
         },

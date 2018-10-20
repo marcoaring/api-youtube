@@ -32,8 +32,15 @@
 					</div>
 				</article>
 			</section>
+			
+			<div class="main-loader">
+				<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
 
-			<a href="#" class="container__load-more">Carregar mais vídeos...</a>
+				<span class="main-loader__image">
+					<img src="assets/images/ajax-loader.gif" alt="Git de bolinhas rodando">
+				</span>
+			</div>
+
 		</div>
 	</main>
 	<script src="assets/js/vendor.js"></script>

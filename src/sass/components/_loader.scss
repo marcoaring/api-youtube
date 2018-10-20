@@ -1,0 +1,48 @@
+.main-loader{
+	position: relative;
+
+	&__button{
+		position: relative;
+		z-index: 2;
+		display: block;
+		width: 100%;
+		margin: 0 auto 20px auto;
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		background-color: $branco;
+		color: $cinza;
+		border: 1px solid $cinza;
+		border-radius: 5px;
+		padding: 10px 0px;
+		text-align: center;
+		text-decoration: none;
+		opacity: 0;
+		transition: all 0.3s linear;
+		
+		&--inactive{ opacity: 1; }
+		
+		&:hover{
+			background-color: $cinza;
+			color: $branco;
+		}
+
+		&:active{
+			background-color: #737373;
+			color: $branco;
+		}
+
+		@media (min-width: 540px){ width: 50%; }
+	}
+
+	&__image{
+		position: absolute;
+		z-index: 1;
+		top: 10px;
+		display: block;
+		width: 16px;
+		height: 16px;
+		left: 50%;
+		margin-left: -8px;
+	}
+}
