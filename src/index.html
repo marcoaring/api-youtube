@@ -12,6 +12,36 @@
 <body>
 	<main class="app-vue">
 		<!--#include virtual="partials/_header.html" -->
+
+		<div class="container">
+			<h2 class="container__title">Todos os vídeos do Canal</h2>
+			<section class="main-videos">
+				<article class="main-videos__box box-video" v-for="video in videos.items">
+					<div class="box-video__thumb">
+						<img :src="video.snippet.thumbnails.high.url" alt="" class="box-video__image container__responsive">
+						<span class="box-video__time">{{video.duration}}</span>
+					</div>
+
+					<div class="box-video__content">
+						<h3 class="box-video__title">{{cutLongText(video.snippet.title, 35)}}</h3>
+
+						<div class="box-video__views">
+							<img src="assets/images/views.png" alt="Olho">
+							{{video.viewCount}} views
+						</div>
+					</div>
+				</article>
+			</section>
+			
+			<div class="main-loader">
+				<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
+
+				<span class="main-loader__image">
+					<img src="assets/images/ajax-loader.gif" alt="Git de bolinhas rodando">
+				</span>
+			</div>
+
+		</div>
 	</main>
 	<script src="assets/js/vendor.js"></script>
     <script src="js/main.js"></script>

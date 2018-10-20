@@ -3,6 +3,7 @@
 	background-color: $vinho;
 	padding-top: 12px;
 	padding-bottom: 12px;
+	margin-bottom: 30px;
 
 	.main-header{
 	    display: flex;
@@ -186,13 +187,4 @@
     		}
 		}
 	}
-
-	@media (min-width: 769px){
-
-	}
-
-	@media (min-width: 1140px){
-
-	}
-
 }

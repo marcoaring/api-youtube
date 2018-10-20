@@ -6,6 +6,18 @@ body{
 	.container{
 		width: 90%;
 		padding: 0px 5%;
+		
+		&__title{
+			color: $vinho;
+			font-size: 36px;
+			margin-bottom: 40px;
+		}
+
+		&__responsive{
+			display: block;
+		    max-width: 100%;
+		    height: auto;
+		}
 
 		@media (min-width: 1024px){
 			width: 960px;
