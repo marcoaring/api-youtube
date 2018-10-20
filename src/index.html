@@ -19,7 +19,7 @@
 			<section class="main-videos">
 				<article class="main-videos__box box-video" v-for="video in videos.items">
 					<div class="box-video__thumb">
-						<a href="#" v-on:click.prevent="openModal(video.id.videoId)">
+						<a href="#" v-on:click.prevent="singleVideo(video.id.videoId, true)">
 							<img :src="video.snippet.thumbnails.high.url" alt="" class="box-video__image container__responsive">
 							<span class="box-video__time">{{video.duration}}</span>
 						</a>
@@ -27,12 +27,12 @@
 
 					<div class="box-video__content">
 						<h3 class="box-video__title">
-							<a href="#" v-on:click.prevent="openModal(video.id.videoId)">{{cutLongText(video.snippet.title, 35)}}</a>
+							<a href="#" v-on:click.prevent="singleVideo(video.id.videoId, true)">{{cutLongText(video.snippet.title, 35)}}</a>
 						</h3>
 
 						<div class="box-video__views">
 							<img src="assets/images/views.png" alt="Olho">
-							{{video.viewCount}} views
+							{{formatViews(video.viewCount)}} views
 						</div>
 					</div>
 				</article>

@@ -56,36 +56,68 @@
 </section>
 
 		<div class="container">
-			<h2 class="container__title" v-if="search == ''">Todos os vídeos do Canal</h2>
-			<h2 class="container__title" v-else>Resultados para: "{{search}}"</h2>
-			<section class="main-videos">
-				<article class="main-videos__box box-video" v-for="video in videos.items">
-					<div class="box-video__thumb">
-						<a href="#" v-on:click.prevent="singleVideo(video.id.videoId, true)">
-							<img :src="video.snippet.thumbnails.high.url" alt="" class="box-video__image container__responsive">
-							<span class="box-video__time">{{video.duration}}</span>
-						</a>
-					</div>
-
-					<div class="box-video__content">
-						<h3 class="box-video__title">
-							<a href="#" v-on:click.prevent="singleVideo(video.id.videoId, true)">{{cutLongText(video.snippet.title, 35)}}</a>
-						</h3>
-
-						<div class="box-video__views">
-							<img src="assets/images/views.png" alt="Olho">
-							{{formatViews(video.viewCount)}} views
+			<div class="page-featured">
+				<section class="featured-video">
+					<h2 class="container__title">Vídeo em destaque</h2>
+					
+					<iframe width="100%" height="316" :src="'https://www.youtube.com/embed/' + video.id + '?autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+					
+					<section class="featured-video__content">
+						<div class="content-video__info">
+							<h2 class="info-title">{{video.snippet.title}}</h2>
+							<div class="views-date">
+								<span class="views-date__content">
+									<span class="box-hidden box-views">{{formatViewsInternal(video.statistics.viewCount)}}</span>
+									<img src="assets/images/views-interna.png" alt="Olho">
+								</span>
+								<span class="views-date__content">
+									<span class="box-hidden box-date">{{formatDate(video.snippet.publishedAt)}}</span>
+									<img src="assets/images/data.png" alt="Data">
+								</span>
+							</div>
 						</div>
-					</div>
-				</article>
-			</section>
 
-			<div class="main-loader" v-if="search == ''">
-				<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
+						<div class="content-video__description">
+							<p>{{video.snippet.description}}</p>
+						</div>
+					</section>
+				</section>
 
-				<span class="main-loader__image">
-					<img src="assets/images/ajax-loader.gif" alt="Git de bolinhas rodando">
-				</span>
+				<section class="more-videos">
+					<h2 class="container__title">+ Vídeos</h2>
+
+					<section class="more-videos__content">
+						<section class="main-videos">
+							<article class="main-videos__box box-video" v-for="video in videos.items">
+								<div class="box-video__thumb">
+									<a href="#" v-on:click.prevent="singleVideo(video.id.videoId, false)">
+										<img :src="video.snippet.thumbnails.high.url" alt="" class="box-video__image container__responsive">
+										<span class="box-video__time">{{video.duration}}</span>
+									</a>
+								</div>
+
+								<div class="box-video__content">
+									<h3 class="box-video__title">
+										<a href="#" v-on:click.prevent="singleVideo(video.id.videoId)">{{cutLongText(video.snippet.title, 35)}}</a>
+									</h3>
+
+									<div class="box-video__views">
+										<img src="assets/images/views.png" alt="Olho">
+										{{formatViews(video.viewCount)}} views
+									</div>
+								</div>
+							</article>
+						</section>
+
+						<div class="main-loader" v-if="search == ''">
+							<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
+
+							<span class="main-loader__image">
+								<img src="assets/images/ajax-loader.gif" alt="Git de bolinhas rodando">
+							</span>
+						</div>
+					</section>
+				</section>
 			</div>
 		</div>
 

@@ -2,24 +2,24 @@
 	<div class="main-modal">
 		<a href="#" class="main-modal__close" v-on:click.prevent="modal = false"></a>
 
-		<iframe width="100%" height="315" :src="'https://www.youtube.com/embed/' + modalVideo.id + '?autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		<iframe width="100%" height="315" :src="'https://www.youtube.com/embed/' + video.id + '?autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-		<div class="main-modal__info">
-			<h2 class="info-title">{{modalVideo.snippet.title}}</h2>
+		<div class="content-video__info">
+			<h2 class="info-title">{{video.snippet.title}}</h2>
 			<div class="views-date">
 				<span class="views-date__content">
-					<span class="box-hidden box-views">{{formatViewsInternal(modalVideo.statistics.viewCount)}}</span>
+					<span class="box-hidden box-views">{{formatViewsInternal(video.statistics.viewCount)}}</span>
 					<img src="assets/images/views-interna.png" alt="Olho">
 				</span>
 				<span class="views-date__content">
-					<span class="box-hidden box-date">{{formatDate(modalVideo.snippet.publishedAt)}}</span>
+					<span class="box-hidden box-date">{{formatDate(video.snippet.publishedAt)}}</span>
 					<img src="assets/images/data.png" alt="Data">
 				</span>
 			</div>
 		</div>
 
-		<div class="main-modal__description">
-			<p>{{modalVideo.snippet.description}}</p>
+		<div class="content-video__description">
+			<p>{{video.snippet.description}}</p>
 		</div>
 	</div>
 </section>

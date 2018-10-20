@@ -2,7 +2,7 @@ var appVue = new Vue({
     el: ".app-vue",
     data: {
         videos: [],
-        modalVideo: [],
+        video: [],
         searchResults: [],
         menuSelected: false,
         searchSelected: false,
@@ -146,7 +146,7 @@ var appVue = new Vue({
                         $.ajax({
                             url: self.urlApi + "videos?key=" + self.keyApi + "&id=" + idVideo + "&part=contentDetails,statistics",
                             success: function(videoItem){
-                                self.$set(self.videos.items[index], 'viewCount', self.formatViews(videoItem.items[0].statistics.viewCount));
+                                self.$set(self.videos.items[index], 'viewCount', videoItem.items[0].statistics.viewCount);
                                 self.$set(self.videos.items[index], 'duration', self.ISO8601toDuration(videoItem.items[0].contentDetails.duration));
                             }
                         });
@@ -179,7 +179,7 @@ var appVue = new Vue({
                         $.ajax({
                             url: self.urlApi + "videos?key=" + self.keyApi + "&id=" + idVideo + "&part=contentDetails,statistics",
                             success: function(videoItem){
-                                self.$set(self.videos.items[index], 'viewCount', self.formatViews(videoItem.items[0].statistics.viewCount));
+                                self.$set(self.videos.items[index], 'viewCount', videoItem.items[0].statistics.viewCount);
                                 self.$set(self.videos.items[index], 'duration', self.ISO8601toDuration(videoItem.items[0].contentDetails.duration));
                             }
                         });
@@ -192,15 +192,15 @@ var appVue = new Vue({
             });
         },
 
-        openModal: function(videoId){
+        singleVideo: function(videoId, statusModal){
             var self = this;
 
-            this.modal = true;
+            this.modal = statusModal;
 
             $.ajax({
                 url: self.urlApi + "videos?key=" + self.keyApi + "&id=" + videoId + "&part=id,snippet,contentDetails,statistics",
                 success: function(resultVideo){
-                    self.modalVideo = resultVideo.items[0];
+                    self.video = resultVideo.items[0];
                 }
             });
         },
@@ -209,6 +209,11 @@ var appVue = new Vue({
     watch:{
         search: function(){
             this.loadVideos();
-        }
+        },
+
+        videos: function(){
+            console.log(this.videos);
+            this.singleVideo(this.videos.items[0].id.videoId, false);
+        },
     }
 });
