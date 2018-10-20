@@ -13,11 +13,13 @@ var appVue = new Vue({
         urlApi: 'https://www.googleapis.com/youtube/v3/',
         keyApi: 'AIzaSyDkAhIY2OrvmrYHQp_gxT8mywbx2Lqn_0g',
         idChannel: 'UCH2VZQBLFTOp6I_qgnBJCuQ', //Encontre outros cannais acessando esse link https://commentpicker.com/youtube-channel-id.php
-        countResults: 12
     },
 
     created: function(){
         this.loadVideos();
+
+        this.search = (this.getUrlParameter('search')) ? this.getUrlParameter('search') : '';
+        this.searchSelected =  (this.getUrlParameter('search') != '') ? true : false;     
     },
 
     methods:{
@@ -96,6 +98,21 @@ var appVue = new Vue({
             return dayFinal + " de " + meses[month] + " de " + year;
         },
 
+        getUrlParameter: function(sParam){
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'), sParameterName, i;
+
+            for(i = 0; i < sURLVariables.length; i++){
+                sParameterName = sURLVariables[i].split('=');
+
+                if(sParameterName[0] === sParam){
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                } else{
+                    return false;
+                }
+            }
+        },
+
         cutLongText: function(text, size){
             if(text.length > size){
                 return text.substring(0, size) + '...';
@@ -107,9 +124,16 @@ var appVue = new Vue({
 
         loadVideos: function(){
             var self = this;
+            var urlAjax = '';
+
+            if(this.search){
+                urlAjax = this.urlApi + "search?key=" + this.keyApi + "&channelId=" + this.idChannel + "&part=snippet,id&type=video&order=date&q=" + this.search;
+            } else{
+                urlAjax = this.urlApi + "search?key=" + this.keyApi + "&channelId=" + this.idChannel + "&part=snippet,id&type=video&order=date&maxResults=12";
+            }
 
             $.ajax({
-                url: self.urlApi + "search?key=" + self.keyApi + "&channelId=" + self.idChannel + "&part=snippet,id&type=video&order=date&maxResults=" + self.countResults,
+                url: urlAjax,
                 success: function(result){
                     var idVideo = '';
 
@@ -135,7 +159,7 @@ var appVue = new Vue({
             var self = this;
 
             $.ajax({
-                url: self.urlApi + "search?key=" + self.keyApi + "&channelId=" + self.idChannel + "&part=snippet,id&type=video&order=date&pageToken=" + nextPage + "&maxResults=" + self.countResults,
+                url: self.urlApi + "search?key=" + self.keyApi + "&channelId=" + self.idChannel + "&part=snippet,id&type=video&order=date&pageToken=" + nextPage + "&maxResults=12",
                 beforeSend: function(){
                     self.loader = true;
                 },
@@ -182,6 +206,9 @@ var appVue = new Vue({
         },
     },
 
-    watch: {
+    watch:{
+        search: function(){
+            this.loadVideos();
+        }
     }
 });

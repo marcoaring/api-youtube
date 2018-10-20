@@ -14,7 +14,8 @@
 		<!--#include virtual="partials/_header.html" -->
 
 		<div class="container">
-			<h2 class="container__title">Todos os vídeos do Canal</h2>
+			<h2 class="container__title" v-if="search == ''">Todos os vídeos do Canal</h2>
+			<h2 class="container__title" v-else>Resultados para: "{{search}}"</h2>
 			<section class="main-videos">
 				<article class="main-videos__box box-video" v-for="video in videos.items">
 					<div class="box-video__thumb">
@@ -36,8 +37,8 @@
 					</div>
 				</article>
 			</section>
-			
-			<div class="main-loader">
+
+			<div class="main-loader" v-if="search == ''">
 				<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
 
 				<span class="main-loader__image">

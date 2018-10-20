@@ -20,7 +20,9 @@
 
 			<section class="main-header__navigation">
 				<div :class="'navigation-itens search-item ' + [searchSelected ? 'search-item--open' : '']">
-					<input type="text" name="search" id="search" v-model="search" placeholder="Digite um termo para a pesquisa" class="search-item__field">
+					<form>
+						<input type="text" name="search" id="search" v-model="search" placeholder="Digite um termo para a pesquisa" class="search-item__field">
+					</form>
 					<img src="assets/images/lupa.png" alt="Lupa" class="search-item__image" v-on:click.prevent="openSearch">
 				</div>
 
@@ -39,7 +41,7 @@
 							</a>
 						</li>
 						<li class="list-menu__item">
-							<a href="#" class="list-menu__link">
+							<a href="./" class="list-menu__link">
 								<img src="assets/images/videos.png" alt="Ícone de um Player de vídeo" class="list-menu__image">
 								Videos
 							</a>
@@ -52,11 +54,12 @@
 </section>
 
 		<div class="container">
-			<h2 class="container__title">Todos os vídeos do Canal</h2>
+			<h2 class="container__title" v-if="search == ''">Todos os vídeos do Canal</h2>
+			<h2 class="container__title" v-else>Resultados para: "{{search}}"</h2>
 			<section class="main-videos">
 				<article class="main-videos__box box-video" v-for="video in videos.items">
 					<div class="box-video__thumb">
-						<a :href="'interna.html?v=' + video.id.videoId">
+						<a href="#" v-on:click.prevent="openModal(video.id.videoId)">
 							<img :src="video.snippet.thumbnails.high.url" alt="" class="box-video__image container__responsive">
 							<span class="box-video__time">{{video.duration}}</span>
 						</a>
@@ -64,7 +67,7 @@
 
 					<div class="box-video__content">
 						<h3 class="box-video__title">
-							<a :href="'interna.html?v=' + video.id.videoId">{{cutLongText(video.snippet.title, 35)}}</a>
+							<a href="#" v-on:click.prevent="openModal(video.id.videoId)">{{cutLongText(video.snippet.title, 35)}}</a>
 						</h3>
 
 						<div class="box-video__views">
@@ -74,16 +77,41 @@
 					</div>
 				</article>
 			</section>
-			
-			<div class="main-loader">
+
+			<div class="main-loader" v-if="search == ''">
 				<a href="#" :class="'main-loader__button ' + [loader ? '' : 'main-loader__button--inactive']" v-on:click.prevent="loadMoreVideos(nextPage)">Carregar mais vídeos...</a>
 
 				<span class="main-loader__image">
 					<img src="assets/images/ajax-loader.gif" alt="Git de bolinhas rodando">
 				</span>
 			</div>
-
 		</div>
+
+		<section class="modal" v-if="modal">
+	<div class="main-modal">
+		<a href="#" class="main-modal__close" v-on:click.prevent="modal = false"></a>
+
+		<iframe width="100%" height="315" :src="'https://www.youtube.com/embed/' + modalVideo.id + '?autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+		<div class="main-modal__info">
+			<h2 class="info-title">{{modalVideo.snippet.title}}</h2>
+			<div class="views-date">
+				<span class="views-date__content">
+					<span class="box-hidden box-views">{{formatViewsInternal(modalVideo.statistics.viewCount)}}</span>
+					<img src="assets/images/views-interna.png" alt="Olho">
+				</span>
+				<span class="views-date__content">
+					<span class="box-hidden box-date">{{formatDate(modalVideo.snippet.publishedAt)}}</span>
+					<img src="assets/images/data.png" alt="Data">
+				</span>
+			</div>
+		</div>
+
+		<div class="main-modal__description">
+			<p>{{modalVideo.snippet.description}}</p>
+		</div>
+	</div>
+</section>
 	</main>
 	<script src="assets/js/vendor.js"></script>
     <script src="js/main.js"></script>
